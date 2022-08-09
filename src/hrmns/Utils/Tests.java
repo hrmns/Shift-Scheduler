@@ -1,5 +1,6 @@
 package hrmns.Utils;
 
+import hrmns.AlgoJuice.BalancedScheduler;
 import hrmns.AlgoJuice.Scheduler;
 
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public class Tests {
         leaveRequests.put("Emp3", new ArrayList<>(Arrays.asList("thu", "fri", "sat", "sun")));
         leaveRequests.put("Emp4", new ArrayList<>(Arrays.asList("sat", "sun")));
 
+        BalancedScheduler.schedulable(leaveRequests);
         return Scheduler.schedulable(leaveRequests);
     }
 
@@ -29,6 +31,7 @@ public class Tests {
         leaveRequests.put("Emp2", new ArrayList<>(Arrays.asList("mon", "tue", "wed")));
         leaveRequests.put("Emp3", new ArrayList<>(Arrays.asList("thu", "fri", "sat", "sun")));
 
+        BalancedScheduler.schedulable(leaveRequests);
         return Scheduler.schedulable(leaveRequests);
     }
 }

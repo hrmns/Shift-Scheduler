@@ -1,5 +1,7 @@
 package hrmns.AlgoJuice;
 
+import hrmns.dto.Employee;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.*;
@@ -12,15 +14,11 @@ import static hrmns.Utils.Constants.week;
 
 final public class Scheduler {
 
-    public static void printMessage(boolean schedulable) {
-        if (schedulable)
-            System.out.println("Shifts assigned successfully for this week");
-        else
-            System.out.println("Shifts for this week cannot be covered with the given params");
-    }
+    public static Employee[][] schedule = new Employee[7][2];
 
     public static boolean canSchedule(HashMap<String, HashSet<String>> requests, Map<String, Integer> totalWorkWeekly, List<String> names, int day) {
         if (day == week.size()) {
+            PrintingPress.printSchedule(totalWorkWeekly, schedule);
             return true;
         }
 
@@ -43,7 +41,10 @@ final public class Scheduler {
 
                 totalWorkWeekly.put(names.get(i), totalWorkWeekly.get(names.get(i)) + 8);
                 totalWorkWeekly.put(names.get(j), totalWorkWeekly.get(names.get(j)) + 8);
-                System.out.println(names.get(i) + " - " + totalWorkWeekly.get(names.get(i)) + "hrs, " + names.get(j) + " - " + totalWorkWeekly.get(names.get(j)) + "hrs ,day:" + day);
+
+                schedule[day][0] = new Employee(names.get(i), totalWorkWeekly.get(names.get(i)));
+                schedule[day][1] = new Employee(names.get(j), totalWorkWeekly.get(names.get(j)));
+
                 ans = ans || canSchedule(requests, totalWorkWeekly, names, day + 1);
                 if (ans)
                     return ans;
@@ -76,10 +77,11 @@ final public class Scheduler {
                 requestsModified.get(day).add(name);
             }
         }
-        System.out.println("FORMAT: Employee name, Work done till that day, day");
 
         Boolean result = canSchedule(requestsModified, totalWorkWeekly, names, 0);
-        printMessage(result);
+
+        PrintingPress.printMessage(result);
         return result;
     }
+
 }
